@@ -50,3 +50,24 @@
   left: -10px;
   
 }
+
+
+.color-palette {
+  position: absolute;
+  bottom: -45px;
+  left: 10px;
+  display: flex;
+  gap: 5px;
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.color-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}

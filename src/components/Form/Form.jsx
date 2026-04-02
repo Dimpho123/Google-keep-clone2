@@ -1,24 +1,29 @@
 import React, {useState} from "react";
 import "./Form.css";
 import { uid } from 'uid';
+import { useEffect } from "react";
 
-const Form = (props) => {
- 
-        //const [userInput, setUserInput] = useState({
-          //title: "",
-          //text: ""
-        //});
-       
-       const [title, setTitle] = useState("");
-       const [text, setText] = useState("");
-       const [isActiveForm, setIsActiveForm] = useState(false);
+      const Form = (props) => {
+      const { edit, selectedNote, toggleModal } = props;
+      const [title, setTitle] = useState((edit && selectedNote.title) || "");
+       const [text, setText] = useState((edit && selectedNote.text) || "");
+       const [isActiveForm, setIsActiveForm] = useState(edit);
+        const [color, setColor] = useState((edit && selectedNote?.color) || "#ffffff");
+  
+        const [showPalette, setShowPalette] = useState(false);
 
        const titleChangeHandler = (event) => setTitle(event.target.value);
-      const textChangeHandler = (event) => {
+       const textChangeHandler = (event) => {
         setText(event.target.value)
-      setIsActiveForm(true);
+        setIsActiveForm(true);
       };
-
+useEffect(() => {
+  if (edit && selectedNote) {
+    setColor(selectedNote.color || "#ffffff");
+    setTitle(selectedNote.title || "");
+    setText(selectedNote.text || "");
+  }
+}, [edit, selectedNote]);
        
       //const titleChangeHandler = (event) => setUserInput((prevState) => {
        //return {
@@ -37,26 +42,37 @@ const Form = (props) => {
      // });
 
 const submitFormHandler = (event) => {
-event.preventDefault();
+  event.preventDefault();
 
-    //Adding data to array
-    //setUserInput({
-//title: "",
-//text: ""
-//})
+  if (!edit) {
+    // ✅ Creating new note
+    props.addNote({
+      id: uid(),
+      title,
+      text,
+      color
+    });
 
-const note = { 
-  id: uid(),
-  title,
-  text,
+    setIsActiveForm(false);
+
+  } else {
+    // ✅ Editing existing note (SAFE ACCESS)
+    props.editNote({
+      id: selectedNote.id,
+      title,
+      text,
+      color
+    });
+
+    toggleModal();
+  }
+
+  setTitle("");
+  setText("");
+
+  setColor("#ffffff");
 };
-console.log(note);
-props.addNote(note);
-setTitle("");
-setText("");
-setIsActiveForm(false);
-  };
-  
+
 const formClickHandler = () => {
 setIsActiveForm(true);
 
@@ -88,13 +104,15 @@ setIsActiveForm(true);
       </div>
             ) : (
               */}
-<div className="form-container active-form" onClick={formClickHandler}>
-        <form onSubmit={submitFormHandler} className={isActiveForm ? "form" : ""} id="form">
+<div 
+  className="form-container active-form" onClick={formClickHandler} 
+  style={{ backgroundColor: color }}
+>
+        <form onSubmit={submitFormHandler} className={isActiveForm ? "form" : ""} >
           {
             isActiveForm && (
               <input onChange={titleChangeHandler} 
               value ={title} 
-              id="note-title" 
               type="text" 
               className="note-title" 
               placeholder="Title"/>
@@ -102,7 +120,7 @@ setIsActiveForm(true);
           }
         
           <input onChange={textChangeHandler}  
-          value ={text} id="note-text" 
+          value ={text} 
           type="text" 
           className="note-text" 
           placeholder="Take a note..."
@@ -120,7 +138,10 @@ setIsActiveForm(true);
                 <span className="tooltip-text">Collaborator</span>
               </div>
               <div className="tooltip">
-                <span className="material-symbols-outlined hover small-icon"
+                <span className="material-symbols-outlined hover small-icon"  onClick={(e) => {
+    e.stopPropagation(); // prevent parent click
+    setShowPalette(prev => !prev); // toggle palette
+  }}
                   >palette</span>
                 <span className="tooltip-text">Change Color</span>
               </div>
@@ -169,7 +190,31 @@ setIsActiveForm(true);
           </div>
             )
            }
-          
+         {showPalette && (
+  <div className="color-palette" onClick={(e) => e.stopPropagation()}>
+  {[
+    "#ffffff",
+    "#f28b82",
+    "#fbbc04",
+    "#fff475",
+    "#ccff90",
+    "#a7ffeb",
+    "#cbf0f8"
+  ].map((c) => (
+    <div
+      key={c}
+      className="color-circle"
+      style={{ backgroundColor: c }}
+      onClick={(e) => {
+        e.stopPropagation(); // prevent parent click
+        setColor(c);          // update the color for the note being created
+        setShowPalette(false);
+      }}
+    />
+  ))}
+</div>
+         )}
+    
         </form>
       </div>
          </div>

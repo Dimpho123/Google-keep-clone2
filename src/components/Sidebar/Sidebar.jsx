@@ -1,33 +1,38 @@
+import { useState } from "react";
 import "./Sidebar.css";
 
-const Sidebar = () => {
-    return (
-        
-      <div className="sidebar">
-        <div className="sidebar-item">
-          <span className="material-symbols-outlined hover active">
-            lightbulb
+const Sidebar = ({ isOpen }) => {
+  const [activeItem, setActiveItem] = useState("Notes");
+
+  const menuItems = [
+    { icon: "lightbulb", label: "Notes" },
+    { icon: "notifications", label: "Reminders" },
+    { icon: "edit", label: "Edit Labels" },
+    { icon: "archive", label: "Archive" },
+    { icon: "delete", label: "Trash" }
+  ];
+
+  return (
+    <div className={isOpen ? "sidebar open" : "sidebar"}>
+      
+      {menuItems.map((item) => (
+        <div
+          key={item.label}
+          className={`sidebar-item ${
+            activeItem === item.label ? "active" : ""
+          }`}
+          onClick={() => setActiveItem(item.label)}
+        >
+          <span className="material-symbols-outlined hover">
+            {item.icon}
           </span>
-          <span className="sidebar-text">Notes</span>
+
+          <span className="sidebar-text">{item.label}</span>
         </div>
-        <div className="sidebar-item">
-          <span className="material-symbols-outlined hover"> notifications </span>
-          <span className="sidebar-text">Reminders</span>
-        </div>
-        <div className="sidebar-item">
-          <span className="material-symbols-outlined hover"> edit </span>
-          <span className="sidebar-text">Edit Labels</span>
-        </div>
-        <div className="sidebar-item">
-          <span className="material-symbols-outlined hover"> archive </span>
-          <span className="sidebar-text">Archive</span>
-        </div>
-        <div className="sidebar-item">
-          <span className="material-symbols-outlined hover"> delete </span>
-          <span className="sidebar-text">Trash</span>
-        </div>
-      </div>
-    )
-}
+      ))}
+
+    </div>
+  );
+};
 
 export default Sidebar;

@@ -1,11 +1,16 @@
 import "./Navbar.css";
 
-const Navbar = () => {
-    return(
-        <nav>
-<div className="logo-area">
+const Navbar = ({ toggleSidebar }) => {
+  return (
+    <nav>
+      <div className="logo-area">
         <div className="tooltip">
-          <span className="material-symbols-outlined hover">menu</span>
+          <span 
+            className="material-symbols-outlined hover"
+            onClick={toggleSidebar}
+          >
+            menu
+          </span>
           <span className="tooltip-text">Main Menu</span>
         </div>
         <img
@@ -14,7 +19,7 @@ const Navbar = () => {
           alt=""
           aria-hidden="true"
          />
-        <span classNameName="logo-text">Keep</span>
+        <span className="logo-text">Keep</span>
       </div>
       <div classNameName="search-area">
         <div className="tooltip">

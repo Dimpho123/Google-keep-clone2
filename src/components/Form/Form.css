@@ -1,11 +1,12 @@
 /* MAIN FORM  */
 .form-container {
-  background: #fff;
+  position: relative;        
+  background-color: inherit; 
   max-width: 598px;
   margin: 32px auto;
-  box-shadow: 0 1-x 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
   border: 1px solid #e0e1e0;
-border-radius: 8px;
+  border-radius: 8px;
 }
 .form-container form {
   display: flex;
@@ -70,4 +71,27 @@ border-radius: 8px;
 .small-icon {
   color: black;
   font-size: 1.1rem;
+}
+
+
+.color-palette {
+  position: absolute;
+  bottom: 50px; 
+  left: 10px;   
+  display: flex;
+  gap: 5px;
+  padding: 5px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+.color-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #ccc;
 }
