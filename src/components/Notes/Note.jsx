@@ -1,17 +1,36 @@
 import React, { useState } from "react";
 
 const Note = (props) => {
-  const { toggleModal, note, setSelectedNote, deleteNote, updateColor } = props;
-
+  const { toggleModal, note, setSelectedNote, deleteNote, updateColor, archiveNote, restoreNote, unarchiveNote,  view } = props;
   const [isHover, setIsHover] = useState(false);
   const [showPalette, setShowPalette] = useState(false);
-
+  const [showMenu, setShowMenu] = useState(false);
   const noteClickHandler = () => {
     toggleModal();
     setSelectedNote(note);
   };
+  const archiveHandler = (e) => {
+  e.stopPropagation(); 
+  archiveNote(note.id);
+  console.log("archiveNote:", archiveNote);
+};
 
-  const deleteHandler = () => deleteNote(note.id);
+const deleteHandler = (e) => {
+  e.stopPropagation();
+  deleteNote(note.id);
+};
+  //const deleteHandler = () => deleteNote(note.id);
+
+
+  const restoreHandler = (e) => {
+  e.stopPropagation();
+  restoreNote(note.id);
+};
+
+const unarchiveHandler = (e) => {
+  e.stopPropagation();
+  unarchiveNote(note.id);
+};
 
   const colors = [
     "#ffffff",
@@ -64,26 +83,65 @@ const Note = (props) => {
           <span
             className="material-symbols-outlined hover small-icon"
             onClick={(e) => {
-    e.stopPropagation(); // prevent parent click
-    setShowPalette(prev => !prev); // toggle palette
+    e.stopPropagation(); 
+    setShowPalette(prev => !prev); 
   }}
           >
             palette
           </span>
         </div>
 
-        <div className="tooltip archive" onClick={deleteHandler}>
-          <span className="material-symbols-outlined hover small-icon">
-            archive
-          </span>
-        </div>
+       {view === "Trash" ? (
+  // 🗑️ TRASH → restore
+  <span
+    className="material-symbols-outlined hover small-icon"
+    onClick={restoreHandler}
+  >
+    restore_from_trash
+  </span>
+) : view === "Archive" ? (
+  // 📦 ARCHIVE → unarchive
+  <span
+    className="material-symbols-outlined hover small-icon"
+    onClick={unarchiveHandler}
+  >
+    unarchive
+  </span>
+) : (
+  // 📝 NOTES → archive
+  <span
+    className="material-symbols-outlined hover small-icon"
+    onClick={archiveHandler}
+  >
+    archive
+  </span>
+)}
+          <div className="tooltip">
+    <span
+      className="material-symbols-outlined hover small-icon"
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowMenu(prev => !prev);
+      }}
+    >
+      more_vert
+    </span>
+
+    {showMenu && (
+      <div className="more-menu" onClick={(e) => e.stopPropagation()}>
+        <div onClick={deleteHandler}>Delete note</div>
+        <div>Edit labels</div>
       </div>
+    )}
+  </div>
+  </div>
+        
 
       {/*  COLOR PICKER */}
       {showPalette && (
         <div
           className="color-palette"
-          onClick={(e) => e.stopPropagation()} // prevent modal open
+          onClick={(e) => e.stopPropagation()} 
         >
           {colors.map((color) => (
             <div

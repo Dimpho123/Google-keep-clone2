@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Sidebar.css";
 
-const Sidebar = ({ isOpen }) => {
+const Sidebar = ({ isOpen, setView }) => {
   const [activeItem, setActiveItem] = useState("Notes");
 
   const menuItems = [
@@ -14,14 +14,16 @@ const Sidebar = ({ isOpen }) => {
 
   return (
     <div className={isOpen ? "sidebar open" : "sidebar"}>
-      
       {menuItems.map((item) => (
         <div
           key={item.label}
           className={`sidebar-item ${
             activeItem === item.label ? "active" : ""
           }`}
-          onClick={() => setActiveItem(item.label)}
+          onClick={() => {
+            setActiveItem(item.label); // 👈 highlight selected
+            setView(item.label);       // 👈 change page
+          }}
         >
           <span className="material-symbols-outlined hover">
             {item.icon}
@@ -30,7 +32,6 @@ const Sidebar = ({ isOpen }) => {
           <span className="sidebar-text">{item.label}</span>
         </div>
       ))}
-
     </div>
   );
 };

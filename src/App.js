@@ -13,12 +13,14 @@ const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 const [notes, setNotes] = useState(NOTES);
 const [selectedNote, setSelectedNote] = useState({});
 const [isModalOpen, setIsModalOpen] = useState(false);
-
+const [archivedNotes, setArchivedNotes] = useState([]);
+const [view, setView] = useState("Notes"); 
+const [trash, setTrash] = useState([]);
     
 
 const addNote = (note) => {
   setNotes((prevNotes) => {
-    return [...notes, note];
+    return [...prevNotes, note];
   });
 
 };
@@ -40,6 +42,70 @@ const deleteNote = (id) => {
     return prevNotes.filter(note => id !== note.id)
   });
 };
+const archiveNote = (id) => {
+  setNotes((prevNotes) => {
+    const noteToArchive = prevNotes.find(note => note.id === id);
+
+    if (noteToArchive) {
+      setArchivedNotes((prev) => {
+        
+        const alreadyExists = prev.some(note => note.id === id);
+        if (alreadyExists) return prev;
+
+        return [...prev, noteToArchive];
+      });
+    }
+
+    return prevNotes.filter(note => note.id !== id);
+  });
+};
+
+const deleteToTrash = (id) => {
+  setNotes((prevNotes) => {
+    const noteToDelete = prevNotes.find(note => note.id === id);
+
+    if (noteToDelete) {
+      setTrash(prev => {
+        const alreadyExists = prev.some(note => note.id === id);
+        if (alreadyExists) return prev; 
+        return [...prev, noteToDelete];
+      });
+    }
+
+    return prevNotes.filter(note => note.id !== id);
+  });
+};
+//Restoring notes
+const restoreNote = (id) => {
+  const noteToRestore = trash.find(note => note.id === id);
+
+  if (!noteToRestore) return;
+
+  setNotes(prevNotes => {
+    const exists = prevNotes.some(note => note.id === id);
+    if (exists) return prevNotes;
+    return [...prevNotes, noteToRestore];
+  });
+
+  
+  setTrash(prev => prev.filter(note => note.id !== id));
+};
+
+//Unarchiving notes
+const unarchiveNote = (id) => {
+  const noteToUnarchive = archivedNotes.find(note => note.id === id);
+
+  if (!noteToUnarchive) return;
+
+  
+  setNotes(prevNotes => {
+    const exists = prevNotes.some(note => note.id === id);
+    if (exists) return prevNotes;
+    return [...prevNotes, noteToUnarchive];
+  });
+ 
+  setArchivedNotes(prev => prev.filter(note => note.id !== id));
+};
 
 const toggleModal = () => {
   setIsModalOpen(prevState => {
@@ -59,15 +125,27 @@ const updateColor = (id, newColor) => {
   return (
     <div>
      <Navbar toggleSidebar={toggleSidebar} />
-    <Sidebar isOpen={isSidebarOpen} />
+    <Sidebar isOpen={isSidebarOpen} setView={setView} />
       <Form addNote={addNote} />
       <Notes 
-      notes={notes} 
-      deleteNote={deleteNote} 
-      toggleModal={toggleModal} 
-      setSelectedNote={setSelectedNote} 
-       updateColor={updateColor}
-      />
+  notes={
+  view === "Notes"
+    ? notes
+    : view === "Archive"
+    ? archivedNotes
+    : view === "Trash"
+    ? trash
+    : []
+}
+  deleteNote={deleteToTrash}
+  toggleModal={toggleModal} 
+  setSelectedNote={setSelectedNote} 
+  updateColor={updateColor}
+  archiveNote={archiveNote}
+   unarchiveNote={unarchiveNote}  
+  restoreNote={restoreNote}  
+  view={view}     
+  />            
       {
       isModalOpen && <Modal isModalOpen={isModalOpen} selectedNote={selectedNote}
       toggleModal={toggleModal} editNote={editNote}

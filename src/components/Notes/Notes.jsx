@@ -2,7 +2,7 @@ import "./Notes.css";
 import Note from "./Note";
 
 const Notes = (props) => {
-const { notes, deleteNote, toggleModal, setSelectedNote,updateColor} = props;
+const { notes, deleteNote, toggleModal, setSelectedNote,updateColor, archiveNote, restoreNote,unarchiveNote, view} = props;
 
 
 return (
@@ -12,12 +12,16 @@ return (
 ) : (
 notes.map((note, index) => (
 <Note 
-key={index} 
-note={note} 
-deleteNote={deleteNote} 
-toggleModal={toggleModal}
-setSelectedNote={setSelectedNote}
- updateColor={updateColor} 
+  key={index} 
+  note={note} 
+  deleteNote={deleteNote}
+  toggleModal={toggleModal}
+  setSelectedNote={setSelectedNote}
+  updateColor={updateColor}
+  archiveNote={archiveNote}   
+  unarchiveNote={unarchiveNote}  
+  restoreNote={restoreNote}
+  view={view}
 />
     ))
 )}
