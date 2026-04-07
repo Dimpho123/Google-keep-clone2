@@ -95,3 +95,39 @@
   cursor: pointer;
   border: 1px solid #ccc;
 }
+
+
+.reminder-popup {
+  position: absolute;
+  bottom: -120px;
+  left: 0;
+  width: 260px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 100;
+}
+
+.reminder-title {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.reminder-sub {
+  font-size: 0.8rem;
+  color: gray;
+  margin-bottom: 10px;
+}
+
+.reminder-option {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.reminder-option:hover {
+  background: #f1f3f4;
+}

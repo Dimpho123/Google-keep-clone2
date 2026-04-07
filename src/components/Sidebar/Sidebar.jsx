@@ -14,21 +14,16 @@ const Sidebar = ({ isOpen, setView }) => {
 
   return (
     <div className={isOpen ? "sidebar open" : "sidebar"}>
-      {menuItems.map((item) => (
+      {menuItems.map(item => (
         <div
           key={item.label}
-          className={`sidebar-item ${
-            activeItem === item.label ? "active" : ""
-          }`}
+          className={`sidebar-item ${activeItem === item.label ? "active" : ""}`}
           onClick={() => {
-            setActiveItem(item.label); // 👈 highlight selected
-            setView(item.label);       // 👈 change page
+            setActiveItem(item.label);
+            setView(item.label);
           }}
         >
-          <span className="material-symbols-outlined hover">
-            {item.icon}
-          </span>
-
+          <span className="material-symbols-outlined hover">{item.icon}</span>
           <span className="sidebar-text">{item.label}</span>
         </div>
       ))}
