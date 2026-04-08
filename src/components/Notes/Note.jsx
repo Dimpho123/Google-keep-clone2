@@ -154,6 +154,11 @@ const Note = ({
             <div className="more-menu" onClick={(e) => e.stopPropagation()}>
               <div onClick={deleteHandler}>Delete note</div>
               <div>Edit labels</div>
+              <div>Add drawing</div>
+              <div>Make a copy</div>
+              <div>Show checkboxes</div>
+              <div>Copy to Google Docs</div>
+              <div>Version history</div>
             </div>
           )}
         </div>

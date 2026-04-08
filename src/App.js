@@ -16,6 +16,11 @@ const App = () => {
   const [archivedNotes, setArchivedNotes] = useState([]);
   const [view, setView] = useState("Notes");
   const [trash, setTrash] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
+
+const toggleDarkMode = () => {
+  setDarkMode(prev => !prev);
+};
 
   // Compute reminders based on notes
   const reminderNotes = notes.filter(note => note.reminder);
@@ -101,8 +106,8 @@ const App = () => {
 };
 
   return (
-    <div>
-      <Navbar toggleSidebar={toggleSidebar} />
+   <div className={darkMode ? "app dark" : "app"}>
+      <Navbar toggleSidebar={toggleSidebar} toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
       <Sidebar isOpen={isSidebarOpen} setView={setView} />
       <Form addNote={addNote} />
      <Notes

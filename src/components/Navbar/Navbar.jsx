@@ -1,7 +1,9 @@
 import "./Navbar.css";
 
-const Navbar = ({ toggleSidebar }) => {
+const Navbar = ({ toggleSidebar, toggleDarkMode, darkMode }) => {
+  
   return (
+   
     <nav>
       <div className="logo-area">
         <div className="tooltip">
@@ -42,6 +44,17 @@ const Navbar = ({ toggleSidebar }) => {
           <span className="tooltip-text">Settings</span>
         </div>
       </div>
+      <div className="tooltip">
+  <span
+    className="material-symbols-outlined hover"
+    onClick={toggleDarkMode}
+  >
+    {darkMode ? "light_mode" : "dark_mode"}
+  </span>
+  <span className="tooltip-text">
+    {darkMode ? "Light mode" : "Dark mode"}
+  </span>
+</div>
       <div className="profile-actions-area">
         <div className="tooltip">
           <span className="material-symbols-outlined hover">apps</span>

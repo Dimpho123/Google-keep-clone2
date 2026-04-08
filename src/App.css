@@ -36,3 +36,50 @@
     transform: rotate(360deg);
   }
 }
+
+/* LIGHT MODE*/
+.app {
+  background-color: #ffffff;
+  color: #202124;
+  min-height: 100vh;
+}
+
+/* DARK MODE */
+.app.dark {
+  background-color: #202124;
+  color: #e8eaed;
+}
+
+
+.app,
+.note,
+.sidebar,
+.form-container {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.app.dark .note {
+  background-color: #2d2e30;
+  border: 1px solid #5f6368;
+  color: black;
+}
+
+.app.dark .sidebar {
+  background-color: #202124;
+  color: #e8eaed;
+}
+
+.app.dark .form-container {
+  background-color: #2d2e30;
+  color: #e8eaed;
+}
+
+.app.dark input {
+  background-color: transparent;
+  color: black;
+}
+
+.app.dark .material-symbols-outlined {
+  color: black;
+}
+

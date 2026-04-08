@@ -73,12 +73,12 @@
 
 
 
-/* When toggled open (clicked menu) */
+/* When toggled open  */
 .sidebar.open {
   width: 220px;
 }
 
-/* 👇 Hover effect (ONLY when NOT open) */
+
 .sidebar:not(.open):hover {
   width: 220px;
 }
@@ -94,14 +94,13 @@
   transition: background 0.2s;
 }
 
-/* Text hidden by default */
 .sidebar-text {
   opacity: 0;
   white-space: nowrap;
   transition: opacity 0.2s ease;
 }
 
-/* Show text when open OR hover */
+
 .sidebar.open .sidebar-text,
 .sidebar:hover .sidebar-text {
   opacity: 1;
@@ -110,12 +109,14 @@
 
 
 
-/* Active (clicked) item */
+
 .sidebar-item.active {
-  background-color: #feefc3; /* Google Keep yellow */
+  background-color: #feefc3; 
 }
 
 /* Hover effect */
 .sidebar-item:hover {
   background-color: #f1f3f4;
 }
+
+
