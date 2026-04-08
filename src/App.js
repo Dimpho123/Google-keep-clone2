@@ -20,9 +20,9 @@ const App = () => {
   // Compute reminders based on notes
   const reminderNotes = notes.filter(note => note.reminder);
 
-  const addNote = (note) => {
-    setNotes(prevNotes => [...prevNotes, note]);
-  };
+ const addNote = (note) => {
+  setNotes(prevNotes => [...prevNotes, { ...note, pinned: false }]);
+};
 
   const editNote = (editedNote) => {
     setNotes(prevNotes =>
@@ -92,35 +92,41 @@ const App = () => {
       prevNotes.map(note => (note.id === id ? { ...note, color: newColor } : note))
     );
   };
+  const togglePin = (id) => {
+  setNotes(prevNotes =>
+    prevNotes.map(note =>
+      note.id === id ? { ...note, pinned: !note.pinned } : note
+    )
+  );
+};
 
   return (
     <div>
       <Navbar toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} setView={setView} />
       <Form addNote={addNote} />
-
-      <Notes
-        notes={
-          view === "Notes"
-            ? notes
-            : view === "Archive"
-            ? archivedNotes
-            : view === "Trash"
-            ? trash
-            : view === "Reminders"
-            ? reminderNotes
-            : notes
-        }
-        deleteNote={deleteToTrash}
-        toggleModal={toggleModal}
-        setSelectedNote={setSelectedNote}
-        updateColor={updateColor}
-        archiveNote={archiveNote}
-        unarchiveNote={unarchiveNote}
-        restoreNote={restoreNote}
-        view={view}
-      />
-
+     <Notes
+       notes={
+        view === "Notes"
+      ? notes
+      : view === "Archive"
+      ? archivedNotes
+      : view === "Trash"
+      ? trash
+      : view === "Reminders"
+      ? reminderNotes
+      : notes
+  }
+  deleteNote={deleteToTrash}
+  toggleModal={toggleModal}
+  setSelectedNote={setSelectedNote}
+  updateColor={updateColor}
+  archiveNote={archiveNote}
+  unarchiveNote={unarchiveNote}
+  restoreNote={restoreNote}
+  view={view}
+  togglePin={togglePin}
+/>
       {isModalOpen && (
         <Modal
           isModalOpen={isModalOpen}

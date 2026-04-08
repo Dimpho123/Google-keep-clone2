@@ -131,3 +131,63 @@
 .reminder-option:hover {
   background: #f1f3f4;
 }
+.pinned {
+  color: #fbbc04; 
+}
+
+/* PIN TOP RIGHT */
+.form-container {
+  position: relative;
+}
+
+.pin-top {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
+  color: #5f6368;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+
+.form-container:hover .pin-top {
+  opacity: 1;
+}
+
+
+.pin-top.pinned {
+  opacity: 1;
+  background: #e8eaed;
+  border-radius: 50%;
+  padding: 4px;
+  color: #202124;
+}
+
+
+.selected-reminder {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 5px 10px;
+  background: #f1f3f4;
+  border-radius: 20px;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.selected-reminder .material-symbols-outlined {
+  font-size: 16px;
+  color: #5f6368;
+}
+
+.remove-reminder {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.remove-reminder:hover {
+  color: red;
+}

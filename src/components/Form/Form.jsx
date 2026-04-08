@@ -12,6 +12,9 @@ const Form = (props) => {
   const [showPalette, setShowPalette] = useState(false);
   const [reminder, setReminder] = useState("");
   const [showReminderPicker, setShowReminderPicker] = useState(false);
+  const [pinned, setPinned] = useState((edit && selectedNote.pinned) || false);
+
+const togglePinned = () => setPinned(prev => !prev);
 
   useEffect(() => {
     if (edit && selectedNote) {
@@ -54,7 +57,8 @@ const Form = (props) => {
         title,
         text,
         color,
-        reminder
+        reminder,
+        pinned,
       });
       setIsActiveForm(false);
     } else {
@@ -63,7 +67,8 @@ const Form = (props) => {
         title,
         text,
         color,
-        reminder
+        reminder,
+        pinned,
       });
       toggleModal();
     }
@@ -93,7 +98,16 @@ const Form = (props) => {
             placeholder="Title"
           />
         )}
-
+{/*  PIN AT TOP RIGHT */}
+<span
+  className={`material-symbols-outlined pin-top ${pinned ? "pinned" : ""}`}
+  onClick={(e) => {
+    e.stopPropagation();
+    togglePinned();
+  }}
+>
+  push_pin
+</span>
         <input
           onChange={(e) => {
             setText(e.target.value);
@@ -107,7 +121,11 @@ const Form = (props) => {
 
         {isActiveForm && (
           <div className="form-actions">
-            {/* REMINDER POPUP */}
+            <div className="icons">
+ 
+  
+</div>
+           
             {showReminderPicker && (
               <div className="reminder-popup" onClick={(e) => e.stopPropagation()}>
                 <p className="reminder-title">Remind me later</p>
@@ -131,11 +149,18 @@ const Form = (props) => {
 
                 <div className="reminder-option">
                   <label style={{ cursor: "pointer" }}>
-                    📅 Pick date & time
+                    <span className="material-symbols-outlined small-icon">
+      schedule
+    </span>
+                     Pick date & time
                     <input
-                      type="datetime-local"
+                    type="datetime-local"
                       value={reminder ? reminder.slice(0, 16) : ""}
-                      onChange={(e) => setReminder(e.target.value)}
+                      onChange={(e) => {
+                           setReminder(e.target.value);
+                           setShowReminderPicker(false); 
+}}
+
                       style={{
                         display: "block",
                         marginTop: "5px",
@@ -143,6 +168,7 @@ const Form = (props) => {
                         cursor: "pointer"
                       }}
                     />
+                   
                   </label>
                 </div>
               </div>

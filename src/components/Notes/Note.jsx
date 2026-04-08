@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+
+
 const Note = ({
   toggleModal,
   note,
@@ -10,6 +12,7 @@ const Note = ({
   restoreNote,
   unarchiveNote,
   view,
+  togglePin
 }) => {
   const [isHover, setIsHover] = useState(false);
   const [showPalette, setShowPalette] = useState(false);
@@ -42,8 +45,8 @@ const Note = ({
 
   const removeReminder = (e) => {
     e.stopPropagation();
-    updateColor(note.id, note.color); // Keep color
-    note.reminder = null; // Remove reminder
+    updateColor(note.id, note.color); 
+    note.reminder = null; 
   };
 
   const colors = [
@@ -67,6 +70,18 @@ const Note = ({
       onMouseOver={() => setIsHover(true)}
       onMouseOut={() => setIsHover(false)}
     >
+     {/*  PIN ICON (TOP RIGHT) */}
+  <span
+    className={`material-symbols-outlined pin-top ${
+      note.pinned ? "pinned" : ""
+    }`}
+    onClick={(e) => {
+      e.stopPropagation();
+      togglePin(note.id);
+    }}
+  >
+    push_pin
+  </span>
       {isHover && <span className="material-symbols-outlined check-circle">check_circle</span>}
 
       <div className="title">{note.title}</div>
@@ -74,7 +89,10 @@ const Note = ({
 
       {note.reminder && (
         <div className="note-reminder">
-          ⏰ {new Date(note.reminder).toLocaleString()}
+          <span className="material-symbols-outlined small-icon">
+      schedule
+    </span>
+           {new Date(note.reminder).toLocaleString()}
           {isHover && (
             <span
               className="material-symbols-outlined remove-reminder"
