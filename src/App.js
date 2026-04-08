@@ -35,10 +35,10 @@ const toggleDarkMode = () => {
     );
   };
 
-  const deleteNote = (id) => {
+ /* const deleteNote = (id) => {
     setNotes(prevNotes => prevNotes.filter(note => note.id !== id));
   };
-
+*/
   const archiveNote = (id) => {
     setNotes(prevNotes => {
       const noteToArchive = prevNotes.find(note => note.id === id);
